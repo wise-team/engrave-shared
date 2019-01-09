@@ -11,14 +11,14 @@ async function getArticle(username: string, hostname: string, permlink: string) 
         
         if( ! flattenedArticle) {    
             
-            const article = await getSteemArticle(username, permlink);
+            const steemArticle = await getSteemArticle(username, permlink);
 
-            if(!article) {
+            if(!steemArticle) {
                 await setArticleNotExist(hostname,permlink);
                 throw new ArticleNotFound();
             }
             
-            return await setArticle(username, permlink, article);
+            return await setArticle(hostname, username, permlink, steemArticle);
 
         } else {
 
