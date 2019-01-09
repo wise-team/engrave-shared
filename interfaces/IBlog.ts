@@ -23,6 +23,12 @@ export interface Blog {
     lang: string;
     theme: string;
     show_everything: boolean;
+    categories: [{
+            steem_tag: string;
+            name: string,
+            slug: string
+
+    }]
 }
 
 export interface IBlog extends Document {

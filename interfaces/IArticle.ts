@@ -7,5 +7,9 @@ export interface IArticle {
     tags: string[];
     thumbnail: string;
     votes_count: number,
-    value: number
+    value: number,
+    category: {
+        name: string,
+        slug: string
+    }
 }
