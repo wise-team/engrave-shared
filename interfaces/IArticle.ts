@@ -8,6 +8,7 @@ export interface IArticle {
     thumbnail: string;
     votes_count: number,
     value: number,
+    comments: number,
     category: {
         name: string,
         slug: string

@@ -28,7 +28,8 @@ export default (steemArticle: any, blog: Blog): IArticle => {
         votes_count: steemArticle.net_votes,
         value,
         abstract: striptags(body.substr(0, 250)),
-        category: category
+        category: category,
+        comments: steemArticle.children
     }
 }
 
