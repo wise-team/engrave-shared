@@ -3,8 +3,8 @@ import { IArticle } from "../../../interfaces/IArticle";
 const Redis = require('ioredis');
 const redis = new Redis({ host: "redis" });
 
-async function getLatestArticles(username: string, limit: number): Promise<IArticle[]> {
-    const permlinks = await redis.zrevrange(`created:${username}`, 0, limit);
+async function getLatestArticles(username: string, skip: number): Promise<IArticle[]> {
+    const permlinks = await redis.zrevrange(`created:${username}`, skip, skip + 11);
     
     if(!permlinks.length) {
         return [];
