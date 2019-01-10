@@ -13,7 +13,7 @@ async function setArticle(hostname: string, username: string, permlink: string, 
     
     await redis.set(`article:${username}:${permlink}`, JSON.stringify(parsedArticle));
     await redis.zadd(`created:${username}`, timestamp, `article:${username}:${permlink}`);
-    // await redis.zadd(`category:${steem_article.category}:${username}`, timestamp, `article:${username}:${permlink}`);
+    await redis.zadd(`category:${username}:${parsedArticle.category.slug}`, timestamp, `article:${username}:${permlink}`);
     
     return parsedArticle
 }
