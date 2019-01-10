@@ -11,8 +11,10 @@ async function setArticle(hostname: string, username: string, permlink: string, 
     const parsedArticle = parseSteemArticle(steem_article, blog);
     const timestamp = (new Date(steem_article.created)).getTime();
     
-    await redis.set(`article:${username}:${permlink}`, JSON.stringify(parsedArticle));
-    await redis.zadd(`created:${username}`, timestamp, `article:${username}:${permlink}`);
+    await redis.set(`engrave:${username}:${permlink}`, ""); // it exists
+    await redis.set(`article:${username}:${permlink}`, JSON.stringify(parsedArticle)); // proper article
+    await redis.zadd(`created:${username}`, timestamp, `article:${username}:${permlink}`); // latest list
+    
     // await redis.zadd(`category:${steem_article.category}:${username}`, timestamp, `article:${username}:${permlink}`);
     
     return parsedArticle
