@@ -102,7 +102,6 @@ function createYoutubeEmbed(key: string) {
 
 function transformYoutubeLinks(text: string) {
     if (!text) return text;
-    const self = this;
 
     const linkreg = /(?:)<a([^>]+)>(.+?)<\/a>/g;
     const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
