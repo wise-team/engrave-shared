@@ -1,6 +1,14 @@
 import { IBlog, Blog } from "../../../interfaces/IBlog";
 
 function prepareNewBlogToCache(dbBlog: IBlog): Blog {
+
+    const categories: any = [];
+
+    for(const category of dbBlog.categories) {
+        const {steem_tag, name, slug} = category;
+        categories.push({steem_tag, name, slug });
+    }
+
     return {
         username: dbBlog.steem_username,
         domain: dbBlog.domain,
@@ -23,7 +31,7 @@ function prepareNewBlogToCache(dbBlog: IBlog): Blog {
         lang: dbBlog.frontpage_language,
         theme: dbBlog.theme,
         show_everything: dbBlog.show_everything,
-        categories: dbBlog.categories
+        categories: categories
     }
 }
 
