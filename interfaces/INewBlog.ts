@@ -2,7 +2,9 @@ import { Document } from "mongoose";
 
 export interface INewBlog extends Document {
     username: string;
-    domain: string;
+    url: string,
+    domain: string,
+    domain_redirect: boolean,
     title: string;
     slogan: string;
     logo_url: string;
@@ -24,10 +26,11 @@ export interface INewBlog extends Document {
     
     lang: string;
     theme: string;
+
     premium: boolean;
+
     categories: [{
-            steem_tag: string;
-            name: string,
-            slug: string
+        name: string,
+        slug: string
     }]
 }
