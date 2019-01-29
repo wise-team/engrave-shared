@@ -8,7 +8,7 @@ import { IBlog } from '../../../interfaces/IBlog';
 
 async function setBlog(hostname: string, blog: IBlog) {
     const newblog = prepareNewBlogToCache(blog)
-    await blogs.set(hostname, newblog);
+    await blogs.rewrite(hostname, newblog);
     return newblog;
 }
 
