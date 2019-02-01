@@ -8,7 +8,7 @@ async function setArticle(hostname: string, username: string, permlink: string, 
     
     const blog = await getBlog(hostname);
 
-    const parsedArticle = parseSteemArticle(steem_article, blog);
+    const parsedArticle = await parseSteemArticle(steem_article, blog);
     const timestamp = (new Date(steem_article.created)).getTime();
     
     await redis.set(`article:${username}:${permlink}`, JSON.stringify(parsedArticle));

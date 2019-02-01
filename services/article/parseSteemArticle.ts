@@ -1,12 +1,11 @@
 import { IArticle } from '../../interfaces/IArticle';
 import { Blog } from '../../interfaces/IBlog';
 
-var md = require('markdown-it')({
-    linkify: true
-});
+var md = require('markdown-it')({ linkify: true });
 var striptags = require('striptags');
+var isAnImageUrl = require('is-an-image-url');
 
-export default (steemArticle: any, blog: Blog): IArticle => {
+export default async (steemArticle: any, blog: Blog): Promise<IArticle> => {
 
     const {
         title,
@@ -14,7 +13,7 @@ export default (steemArticle: any, blog: Blog): IArticle => {
         created
     } = steemArticle;
 
-    const body = prepareArticleBody(steemArticle.body);
+    const body = await prepareArticleBody(steemArticle.body);
     const thumbnail = prepareArticleThumbnail(steemArticle);
     const tags = prepareArticleTags(steemArticle);
     const value = prepareArticleValue(steemArticle);
@@ -35,9 +34,9 @@ export default (steemArticle: any, blog: Blog): IArticle => {
     }
 }
 
-function prepareArticleBody(body: string) {
+async function prepareArticleBody(body: string) {
     const tmp = removeEngraveInfo(striptags(body));
-    return transformYoutubeLinks(md.render(tmp));
+    return await rawUrlsToImages(transformYoutubeLinks(md.render(tmp)));
 }
 
 function prepareArticleThumbnail(steemArticle: any) {
@@ -140,12 +139,34 @@ function transformYoutubeLinks(text: string) {
     return resultHtml;
 };
 
+async function rawUrlsToImages(text: string): Promise<string> {
+    const linkedRegex = /(?:)<p><a([^>]+)>(.+?)<\/a><\/p>/g;
+    const paragraphedImages = text.match(linkedRegex);
+
+    for(const linkifiedImage of paragraphedImages) {
+        const [,url] = linkifiedImage.split(/<a href="(.+)"\>.+?<\/a>/g);
+        if( await isUrlImageAsync(url)) {
+            text = text.replace(linkifiedImage, `<p><img src="${url}" alt=""></p>`);
+        }
+    }
+
+    return text;
+}
+
 function removeEngraveInfo(body: string) {
 
-    let a = body;
-    let b = a.replace(/(\*\*\*\*\*\*\*\*\*\*\*\n\nArtykuł autorstwa: @)(?:.*)(, dodany za pomocą serwisu )(?:.*)\(https:\/\/(?:.*)\)/g, "");
-    let c = b.replace(/(\n\*\*\*\n\n###\sOriginally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.)/g, "");
-    let d = c.replace(/(\n\*\*\*\n\s###\sPierwotnie opublikowano na \[)(.*)(\)\.\sBlog na Steem napędzany przez \[)(.*)(\)\.)/g, "");
-    let e = d.replace(/(\n\*\*\*\n\n###\sOryginally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.)/g, "");
-    return e;
+    const result = body
+            .replace(/(\*\*\*\*\*\*\*\*\*\*\*\n\nArtykuł autorstwa: @)(?:.*)(, dodany za pomocą serwisu )(?:.*)\(https:\/\/(?:.*)\)/g, "")
+            .replace(/(\n\*\*\*\n\n###\sOriginally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.)/g, "")
+            .replace(/(\n\*\*\*\n\s###\sPierwotnie opublikowano na \[)(.*)(\)\.\sBlog na Steem napędzany przez \[)(.*)(\)\.)/g, "")
+            .replace(/(\n\*\*\*\n\n###\sOryginally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.)/g, "");
+    return result;
+}
+
+async function isUrlImageAsync(url: string) {
+    return new Promise((resolve, reject) => {
+        isAnImageUrl(url, (result: boolean) => {
+            resolve(result);
+        });
+    })
 }
