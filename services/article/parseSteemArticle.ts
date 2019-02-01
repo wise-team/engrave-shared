@@ -143,6 +143,7 @@ async function rawUrlsToImages(text: string): Promise<string> {
     const linkedRegex = /(?:)<p><a([^>]+)>(.+?)<\/a><\/p>/g;
     const paragraphedImages = text.match(linkedRegex);
 
+    if(paragraphedImages && paragraphedImages.length)
     for(const linkifiedImage of paragraphedImages) {
         const [,url] = linkifiedImage.split(/<a href="(.+)"\>.+?<\/a>/g);
         if( await isUrlImageAsync(url)) {
