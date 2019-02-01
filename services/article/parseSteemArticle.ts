@@ -1,7 +1,9 @@
 import { IArticle } from '../../interfaces/IArticle';
 import { Blog } from '../../interfaces/IBlog';
 
-var md = require('markdown-it')();
+var md = require('markdown-it')({
+    linkify: true
+});
 var striptags = require('striptags');
 
 export default (steemArticle: any, blog: Blog): IArticle => {
