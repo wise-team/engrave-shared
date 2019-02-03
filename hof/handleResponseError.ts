@@ -26,7 +26,7 @@ export async function handleResponseError(handler: any, req: Request, res: Respo
         } = error;
 
         if (!statusCode){
-            return res.status(500).json({error: error.toString().replace(/"|error:/g, '')});
+            return res.status(500).json({error: error.toString().replace(/"|[e|E]rror:/g, '')});
         }
 
         if (response) {
