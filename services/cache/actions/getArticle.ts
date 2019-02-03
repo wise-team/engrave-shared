@@ -1,13 +1,11 @@
 import { setArticle, setArticleNotExist } from "../cache";
 import { ArticleNotFound } from "../../../helpers/errorCodes";
 import { getSteemArticle } from "../../steem/steem";
-
-const Redis = require('ioredis');
-const redis = new Redis({ host: "redis" });
+import engine from "../store/engine";
 
 async function getArticle(username: string, hostname: string, permlink: string) {
     try {
-        const flattenedArticle = await redis.get(`article:${username}:${permlink}`);
+        const flattenedArticle = await engine.get(`article:${username}:${permlink}`);
         
         if( ! flattenedArticle) {    
             

@@ -1,10 +1,10 @@
-const Redis = require('ioredis');
-const redis = new Redis({ host: "redis" });
-const JSONCache = require('redis-json');
-const blogs = new JSONCache(redis, {prefix: 'blogs:'});
 
+import engine from '../store/engine';
 import prepareNewBlogToCache from '../utils/prepareNewBlog';
 import { IBlog } from '../../../interfaces/IBlog';
+
+const JSONCache = require('redis-json');
+const blogs = new JSONCache(engine, {prefix: 'blogs:'});
 
 async function setBlog(hostname: string, blog: IBlog) {
     const newblog = prepareNewBlogToCache(blog)

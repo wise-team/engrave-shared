@@ -7,6 +7,7 @@ import removeArticle from './actions/removeArticle';
 import setArticleNotExist from './actions/setArticleNotExist';
 import getBlog from './actions/getBlog';
 import setBlog from './actions/setBlog';
+import setUserRegistered from './actions/users/setUserRegistered';
 
 export {
     getArticle,
@@ -17,5 +18,6 @@ export {
     setBlog,
     setArticle,
     setArticleNotExist,
-    removeArticle
+    removeArticle,
+    setUserRegistered
 }
