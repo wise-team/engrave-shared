@@ -28,9 +28,11 @@ export interface INewBlog extends Document {
     theme: string;
 
     premium: boolean;
+    adopter: boolean;
 
     categories: [{
         name: string,
-        slug: string
+        slug: string,
+        description: string
     }]
 }
