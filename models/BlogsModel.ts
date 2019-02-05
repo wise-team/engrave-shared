@@ -77,6 +77,10 @@ export let BlogSchema = new Schema({
         type: Boolean,
         default: false
     },
+    adopter: {
+        type: Boolean,
+        default: false
+    }
 });
 
 BlogSchema.plugin(MongooseAutoIncrementID.plugin, { field: 'port', startAt: 81, modelName: 'Blogs' });
