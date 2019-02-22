@@ -6,6 +6,7 @@ export let BlogSchema = new Schema({
 
     steem_username: String,
     email: String,
+    newsletter: Boolean,
     port: Number,
     domain: String,
     is_domain_custom: {

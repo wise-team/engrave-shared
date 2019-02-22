@@ -34,6 +34,7 @@ export interface Blog {
 export interface IBlog extends Document {
     steem_username: string;
     email: string;
+    newsletter: boolean,
     port: number;
     domain: string;
     is_domain_custom: boolean;
