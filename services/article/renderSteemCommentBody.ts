@@ -1,3 +1,4 @@
+const isImageUrl = require('is-image-url');
 
 var md = require('markdown-it')({ 
     html: true, 
@@ -5,8 +6,8 @@ var md = require('markdown-it')({
 });
 
 export default async function renderSteemCommentBody(body: string) {
-    const tmp = removeEngraveInfo(body);
-    return await rawUrlsToImages(transformYoutubeLinks(md.render(tmp)));
+    const tmp = transformYoutubeLinks(removeEngraveInfo(body));
+    return await rawUrlsToImages(md.render(tmp));
 }
 
 function createYoutubeEmbed(key: string) {
@@ -24,7 +25,9 @@ function transformYoutubeLinks(text: string) {
 
     // get all the matches for youtube links using the first regex
     const match = text.match(fullreg);
+    
     if (match && match.length > 0) {
+
         // get all links and put in placeholders
         const matchlinks = text.match(linkreg);
         if (matchlinks && matchlinks.length > 0) {
@@ -53,13 +56,18 @@ function transformYoutubeLinks(text: string) {
 
 async function rawUrlsToImages(text: string): Promise<string> {
 
-    const imagePath = /(https?:\/\/.*\.(?:png|jpg))/g;
-    
-    const paragraphedImages = text.match(imagePath);
-    
-    if(paragraphedImages && paragraphedImages.length) {
-        for(const linkifiedImage of paragraphedImages) {
-            text = text.replace(linkifiedImage, `<img src="${linkifiedImage}" alt="">`);
+    const htmlLink = /(?:)<a([^>]+)>(.+?)<\/a>/g;
+    const urlRegex = /(<a href=\".*\">)(.*)(<\/a>)/g;
+
+    const links = text.match(htmlLink);
+       
+    if(links && links.length) {
+        for(const link of links) {
+            const url = link.split(urlRegex)[2];
+            if(isImageUrl(url)) {
+                console.log(url);
+                text = text.replace(link, `<img src="${url}" alt="">`);
+            }
         }
     }
     
