@@ -75,8 +75,8 @@ function removeEngraveInfo(body: string) {
         .replace(/(\n\*\*\*\n\s###\sPierwotnie opublikowano na \[)(.*)(\)\.\sBlog na Steem napędzany przez \[)(.*)(\)\.)/g, "")
         .replace(/(\n\*\*\*\n\n###\sOryginally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.)/g, "")
         
-        .replace(/(\n\*\*\*\nOriginally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.)/g, "")
-        .replace(/(\n\*\*\*\nPierwotnie opublikowano na \[)(.*)(\)\.\sBlog na Steem napędzany przez \[)(.*)(\)\.)/g, "");
+        .replace(/(\n\*\*\*\n<center><sup>Originally posted on \[)(.*)(\)\.\sSteem blog powered by \[)(.*)(\)\.<\/sup><\/center>)/g, "")
+        .replace(/(\n\*\*\*\n<center><sup>Pierwotnie opublikowano na \[)(.*)(\)\.\sBlog na Steem napędzany przez \[)(.*)(\)\.<\/sup><\/center>)/g, "");
 
     return result;
 }
