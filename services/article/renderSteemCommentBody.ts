@@ -1,8 +1,12 @@
 const isImageUrl = require('is-image-url');
 
-var md = require('markdown-it')({ 
+var Remarkable = require('remarkable');
+
+var md = new Remarkable({
     html: true, 
-    linkify: true 
+    breaks: true,
+    linkify: true ,
+    quotes: '“”‘’'
 });
 
 export default async function renderSteemCommentBody(body: string) {
