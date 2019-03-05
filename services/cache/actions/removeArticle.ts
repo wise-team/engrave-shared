@@ -2,6 +2,8 @@ import engine from "../store/engine";
 
 async function removeArticle(username: string, permlink: string) {
     try {
+        await engine.del(`engrave:${username}:${permlink}`);
+        
         await engine.del(`article:${username}:${permlink}`);
         await engine.zrem(`created:${username}`, `article:${username}:${permlink}`);
         
