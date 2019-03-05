@@ -1,8 +1,8 @@
 import { IArticle } from "../../../interfaces/IArticle";
 import engine from "../store/engine";
 
-async function getLatestArticles(username: string, skip: number): Promise<IArticle[]> {
-    const permlinks = await engine.zrevrange(`created:${username}`, skip, skip + 11);
+async function getLatestArticles(username: string, skip: number, limit?: number): Promise<IArticle[]> {
+    const permlinks = await engine.zrevrange(`created:${username}`, skip, limit ? (skip + limit) : (skip + 11));
     
     if(!permlinks.length) {
         return [];
