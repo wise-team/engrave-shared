@@ -9,7 +9,8 @@ async function getLatestFromCategory(slug: string, username: string, skip: numbe
     }
 
     const rawPosts = await engine.mget(permlinks);
-    const posts = rawPosts.map((post: any) => JSON.parse(post));
+    const onlyValid = rawPosts.filter( (post: any) => post != null);
+    const posts = onlyValid.map((post: any) => JSON.parse(post));
     return posts;
 }
 
