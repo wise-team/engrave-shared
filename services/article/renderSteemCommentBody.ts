@@ -109,6 +109,8 @@ function removeEngraveInfo(body: string) {
 }
 
 function removePartikoInfo(body: string) {
-    return body.replace("Posted using [Partiko Android](https://steemit.com/@partiko-android)", "");
+    return body
+        .replace("Posted using [Partiko Android](https://steemit.com/@partiko-android)", "")
+        .replace("Posted using [Partiko iOS](https://steemit.com/@partiko-ios)","");
 }
 
