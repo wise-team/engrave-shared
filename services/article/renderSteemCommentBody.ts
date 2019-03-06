@@ -10,8 +10,14 @@ var md = new Remarkable({
 });
 
 export default async function renderSteemCommentBody(body: string) {
-    const tmp = transformYoutubeLinks(removeEngraveInfo(body));
-    return await rawUrlsToImages(md.render(tmp));
+    let rendered = body;
+    
+    rendered = removeDappsInfo(rendered);
+    rendered = transformYoutubeLinks(rendered);
+    rendered = md.render(rendered);
+    rendered = await rawUrlsToImages(rendered);
+    
+    return rendered;
 }
 
 function createYoutubeEmbed(key: string) {
@@ -78,6 +84,15 @@ async function rawUrlsToImages(text: string): Promise<string> {
     return text;
 }
 
+function removeDappsInfo(body: string) {
+    let filtered = body;
+    
+    filtered = removeEngraveInfo(body);
+    filtered = removePartikoInfo(filtered);
+    
+    return filtered;
+}
+
 function removeEngraveInfo(body: string) {
 
     const result = body
@@ -92,3 +107,8 @@ function removeEngraveInfo(body: string) {
 
     return result;
 }
+
+function removePartikoInfo(body: string) {
+    return body.replace("Posted using [Partiko Android](https://steemit.com/@partiko-android)", "");
+}
+
