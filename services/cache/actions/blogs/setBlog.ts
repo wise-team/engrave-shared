@@ -1,7 +1,7 @@
 
-import engine from '../store/engine';
-import prepareNewBlogToCache from '../utils/prepareNewBlog';
-import { IBlog } from '../../../interfaces/IBlog';
+import engine from '../../store/engine';
+import prepareNewBlogToCache from '../../utils/prepareNewBlog';
+import { IBlog } from '../../../../interfaces/IBlog';
 
 const JSONCache = require('redis-json');
 const blogs = new JSONCache(engine, {prefix: 'blogs:'});

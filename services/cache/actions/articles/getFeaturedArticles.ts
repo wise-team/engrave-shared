@@ -1,5 +1,5 @@
-import { IArticle } from "../../../interfaces/IArticle";
-import { getLatestArticles } from "../cache";
+import { IArticle } from "../../../../interfaces/IArticle";
+import { getLatestArticles } from "../../cache";
 
 async function getFeaturedArticles(username: string, skip: number): Promise<IArticle[]> {
     

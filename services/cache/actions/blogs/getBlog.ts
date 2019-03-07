@@ -1,8 +1,8 @@
-import { Blog } from "../../../interfaces/IBlog";
-import { Blogs } from "../../../models/BlogsModel";
-import { BlogNotExist } from "../../../helpers/errorCodes";
-import { setBlog } from "../cache";
-import engine from "../store/engine";
+import { Blog } from "../../../../interfaces/IBlog";
+import { Blogs } from "../../../../models/BlogsModel";
+import { BlogNotExist } from "../../../../helpers/errorCodes";
+import { setBlog } from "../../cache";
+import engine from "../../store/engine";
 
 const JSONCache = require('redis-json');
 const blogs = new JSONCache(engine, {prefix: 'blogs:'});

@@ -1,6 +1,6 @@
-import parseSteemArticle from '../../article/parseSteemArticle';
-import { getBlog } from '../cache';
-import engine from '../store/engine';
+import parseSteemArticle from '../../../article/parseSteemArticle';
+import { getBlog } from '../../cache';
+import engine from '../../store/engine';
 
 async function setArticle(hostname: string, username: string, permlink: string, steem_article: any) {
     

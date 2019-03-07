@@ -1,7 +1,7 @@
-import { setArticle, setArticleNotExist } from "../cache";
-import { ArticleNotFound } from "../../../helpers/errorCodes";
-import { getSteemArticle } from "../../steem/steem";
-import engine from "../store/engine";
+import { setArticle, setArticleNotExist } from "../../cache";
+import { ArticleNotFound } from "../../../../helpers/errorCodes";
+import { getSteemArticle } from "../../../steem/steem";
+import engine from "../../store/engine";
 
 async function getArticle(username: string, hostname: string, permlink: string) {
     try {

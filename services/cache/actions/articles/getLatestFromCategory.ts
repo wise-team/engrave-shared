@@ -1,5 +1,5 @@
-import { IArticle } from "../../../interfaces/IArticle";
-import engine from "../store/engine";
+import { IArticle } from "../../../../interfaces/IArticle";
+import engine from "../../store/engine";
 
 async function getLatestFromCategory(slug: string, username: string, skip: number): Promise<IArticle[]> {
     const permlinks = await engine.zrevrange(`category:${username}:${slug}`, skip, skip + 11);

@@ -1,4 +1,4 @@
-import engine from "../store/engine";
+import engine from "../../store/engine";
 
 async function removeArticle(username: string, permlink: string) {
     try {
