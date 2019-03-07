@@ -75,7 +75,6 @@ async function rawUrlsToImages(text: string): Promise<string> {
         for(const link of links) {
             const url = link.split(urlRegex)[2];
             if(isImageUrl(url)) {
-                console.log(url);
                 text = text.replace(link, `<img src="${url}" alt="">`);
             }
         }
@@ -109,6 +108,8 @@ function removeEngraveInfo(body: string) {
 }
 
 function removePartikoInfo(body: string) {
-    return body.replace("Posted using [Partiko Android](https://steemit.com/@partiko-android)", "");
+    return body
+        .replace("Posted using [Partiko Android](https://steemit.com/@partiko-android)", "")
+        .replace("Posted using [Partiko iOS](https://steemit.com/@partiko-ios)","");
 }
 
