@@ -13,6 +13,7 @@ import setUserRegistered from './actions/users/setUserRegistered';
 import isUserRegistered from './actions/users/isUserRegistered';
 import updateArticleCategories from './actions/categories/updateArticleCategories';
 import getArticleCategories from './actions/categories/getArticleCategories';
+import setArticleContent from './actions/articles/setArticleContent';
 
 export {
     getArticle,
@@ -29,5 +30,6 @@ export {
     setUserRegistered,
     isUserRegistered,
     getArticleCategories,
-    updateArticleCategories
+    updateArticleCategories,
+    setArticleContent
 }
