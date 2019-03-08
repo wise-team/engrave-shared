@@ -1,6 +1,6 @@
 import { IBlog } from "../../../interfaces/IBlog";
 
-function prepareNewBlogToCache(dbBlog: IBlog): IBlog {
+function prepareNewBlogToCache(dbBlog: any): IBlog {
 
     const categories: any = [];
 
@@ -10,7 +10,8 @@ function prepareNewBlogToCache(dbBlog: IBlog): IBlog {
     }
 
     return {
-        username: dbBlog.username,
+        uniqueId: dbBlog._id,
+        owner: dbBlog.owner,
         url: dbBlog.url,
         domain: dbBlog.domain,
         domain_redirect: dbBlog.domain_redirect,

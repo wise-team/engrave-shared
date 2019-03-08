@@ -1,7 +1,8 @@
-import { Document, Types } from "mongoose";
+import { ICategory } from "./ICategory";
 
 export interface IBlog {
-    username: string;
+    uniqueId: string,
+    owner: string;
     url: string,
     domain: string,
     domain_redirect: boolean,
@@ -30,11 +31,5 @@ export interface IBlog {
     premium: boolean;
     adopter: boolean;
 
-    categories: [{
-        _id: Types.ObjectId,
-        name: string,
-        slug: string,
-        abstract: string
-        blogId: string
-    }]
+    categories: ICategory[]
 }

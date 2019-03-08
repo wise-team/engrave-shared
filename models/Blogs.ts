@@ -4,8 +4,8 @@ import { IBlog } from "../interfaces/IBlog";
 interface IBlogModel extends IBlog, Document { };
 
 export let BlogSchema = new Schema({
-
-    username: String,
+    uniqueId: String,
+    owner: String,
     url: String,
     domain: String,
     domain_redirect: Boolean,
