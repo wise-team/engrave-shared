@@ -22,7 +22,7 @@ const addToAllCategories = async (blogId: string, permlink: string, timestamp: n
         const key = `${keys.cachedArticles}:${username}:${permlink}`;
 
         for (const category of categories) {
-            await engine.zadd(`${keys.blogCategoryList}:${blogId}:${category.uniqueId}`, timestamp, key);
+            await engine.zadd(`${keys.blogCategoryList}:${blogId}:${category._id}`, timestamp, key);
         }
 
         await engine.zadd(`${keys.blogCreatedList}:${blogId}`, timestamp, key);

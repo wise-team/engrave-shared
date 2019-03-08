@@ -12,7 +12,7 @@ const removeFromAllCategories = async (blogId: string, permlink: string) => {
         const key = `${keys.cachedArticles}:${username}:${permlink}`;
 
         for (const category of categories) {
-            await engine.zrem(`${keys.blogCategoryList}:${blogId}:${category.uniqueId}`, key);
+            await engine.zrem(`${keys.blogCategoryList}:${blogId}:${category._id}`, key);
         }
 
         await engine.zrem(`${keys.blogCreatedList}:${blogId}`, `${keys.cachedArticles}:${username}:${permlink}`);
