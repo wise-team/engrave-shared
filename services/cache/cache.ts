@@ -2,7 +2,7 @@ import getArticle from './actions/articles/getArticle';
 import getFeaturedArticles from './actions/articles/getFeaturedArticles';
 import getLatestArticles from './actions/articles/getLatestArticles';
 import getLatestFromCategory from './actions/articles/getLatestFromCategory';
-import addArticle from './actions/articles/addArticle';
+import setArticle from './actions/articles/setArticle';
 import removeArticle from './actions/articles/removeArticle';
 import setArticleInvalid from './actions/articles/setArticleInvalid';
 import setArticleExist from './actions/articles/setArticleExist';
@@ -22,7 +22,7 @@ export {
     getLatestArticles,
     getLatestFromCategory,
     setBlog,
-    addArticle,
+    setArticle,
     setArticleInvalid,
     setArticleExist,
     removeArticle,

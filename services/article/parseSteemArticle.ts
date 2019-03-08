@@ -5,7 +5,7 @@ import { ICategory } from '../../interfaces/ICategory';
 
 var striptags = require('striptags');
 
-export default async (steemArticle: any, categories: ICategory[]): Promise<IArticle> => {
+export default async (steemArticle: any): Promise<IArticle> => {
 
     const {
         title,
@@ -28,7 +28,7 @@ export default async (steemArticle: any, categories: ICategory[]): Promise<IArti
         votes_count: steemArticle.net_votes,
         value,
         abstract: striptags(body.substr(0, 250)),
-        categories: categories,
+        categories: null,
         comments: steemArticle.children
     }
 }

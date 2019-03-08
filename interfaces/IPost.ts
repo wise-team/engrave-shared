@@ -1,6 +1,7 @@
+import { Document } from "mongoose";
 import { PostStatus } from "../enums/PostStatus";
 
-export interface IPost {
+export interface IPost extends Document {
     created: Date,
     username: string,
     scheduled: Date,

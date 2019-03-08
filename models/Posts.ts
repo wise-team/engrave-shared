@@ -1,7 +1,5 @@
-import { Schema, Model, model, Document } from 'mongoose';
+import { Schema, Model, model } from 'mongoose';
 import { IPost } from '../interfaces/IPost';
-
-interface IPostModel extends IPost, Document { };
 
 export let PostSchema: Schema = new Schema({
     blogId: {
@@ -25,4 +23,4 @@ export let PostSchema: Schema = new Schema({
     }
 });
 
-export const Posts: Model<IPostModel> = model<IPostModel>("posts", PostSchema);
+export const Posts: Model<IPost> = model<IPost>("posts", PostSchema);

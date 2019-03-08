@@ -1,11 +1,11 @@
 import { IArticle } from "../../../../interfaces/IArticle";
 import { getLatestArticles } from "../../cache";
 
-async function getFeaturedArticles(blogId: string, skip: number, limit: number): Promise<IArticle[]> {
+async function getFeaturedArticles(username: string, skip: number): Promise<IArticle[]> {
     
     // TODO get featured
 
-    return await getLatestArticles(blogId, skip, limit);
+    return await getLatestArticles(username, skip);
 }
 
 export default getFeaturedArticles;
