@@ -5,6 +5,8 @@ async function removeArticle(username: string, permlink: string) {
         const cachedArticle = await engine.get(`article:${username}:${permlink}`);
         const article = JSON.parse(cachedArticle);
         
+        await 
+
         if(article) {
             await engine.zrem(`category:${username}:${article.category.slug}`, `article:${username}:${permlink}`);
         }
