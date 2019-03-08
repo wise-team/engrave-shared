@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { ICategory } from "./ICategory";
 
 export interface IArticle {
     title: string,
@@ -11,12 +11,5 @@ export interface IArticle {
     votes_count: number,
     value: number,
     comments: number,
-    categories: [
-        {
-            _id: Types.ObjectId,
-            name: string,
-            slug: string,
-            abstract: string
-        }
-    ]
+    categories: ICategory[]
 }

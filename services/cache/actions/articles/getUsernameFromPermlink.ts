@@ -1,8 +1,9 @@
 import engine from "../../store/engine";
+import keys from "../../store/keys";
 
-async function getAuthorFromPermlink(domain: string, permlink: string): Promise<string> {
+async function getAuthorFromPermlink(blogId: string, permlink: string): Promise<string> {
     
-    const key = await engine.get(`posts:${domain}:${permlink}`);
+    const key = await engine.get(`${keys.whichUsername}:${blogId}:${permlink}`);
 
     const [, username, ] = key.split(':');
     

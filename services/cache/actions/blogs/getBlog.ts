@@ -4,9 +4,10 @@ import { setBlog } from "../../cache";
 import engine from "../../store/engine";
 import { Blogs } from "../../../../models/Blogs";
 import { IBlog } from "../../../../interfaces/IBlog";
+import keys from "../../store/keys";
 
 const JSONCache = require('redis-json');
-const blogs = new JSONCache(engine, {prefix: 'blogs:'});
+const blogs = new JSONCache(engine, {prefix: `${keys.blogs}:`});
 
 async function getBlog(hostname: string): Promise<IBlog> {
     try {

@@ -1,44 +1,31 @@
 import engine from "../../store/engine";
-import getArticleCategories from "./getArticleCategories";
+import removeFromAllCategories from './removeArticleFromAllCategories'
+import getUsernameFromPermlink from '../articles/getUsernameFromPermlink';
+import { ICategory } from "../../../../interfaces/ICategory";
+import keys from "../../store/keys";
 
 /** Update all lists with selected permlink on domain name. Need to pass article timestamp as well */
-export default async (domain: string, permlink: string, username: string, timestamp: number, categories: string[]) => {
+export default async (blogId: string, permlink: string, timestamp: number, categories: ICategory[]) => {
     try {
-        await removeFromAllCategories(domain, permlink, username);
-        await addToAllCategories(domain, permlink, username, timestamp, categories);
-        await setArticleCategories(domain, permlink, categories);
+        await removeFromAllCategories(blogId, permlink);
+        await addToAllCategories(blogId, permlink, timestamp, categories);
+        await setArticleCategories(blogId, permlink, categories);
     } catch (error) {
         console.log(error);
     }
 }
 
-const removeFromAllCategories = async (domain: string, permlink: string, username: string) => {
-
+const addToAllCategories = async (blogId: string, permlink: string, timestamp: number, categories: ICategory[]) => {
     try {
 
-        const categories = await getArticleCategories(domain, permlink);
-        const key = `article:${username}:${permlink}`;
+        const username = await getUsernameFromPermlink(blogId, permlink);
+        const key = `${keys.cachedArticles}:${username}:${permlink}`;
 
         for (const category of categories) {
-            await engine.zrem(`category:${domain}:${category}`, key);
+            await engine.zadd(`${keys.blogCategoryList}:${blogId}:${category.uniqueId}`, timestamp, key);
         }
 
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-
-const addToAllCategories = async (domain: string, permlink: string, username: string, timestamp: number, categories: string[]) => {
-    try {
-
-        const key = `article:${username}:${permlink}`;
-
-        for (const category of categories) {
-            await engine.zadd(`category:${domain}:${category}`, timestamp, key);
-        }
-
-        await engine.zadd(`created:${domain}`, timestamp, key);
+        await engine.zadd(`${keys.blogCreatedList}:${blogId}`, timestamp, key);
 
 
     } catch (error) {
@@ -46,11 +33,10 @@ const addToAllCategories = async (domain: string, permlink: string, username: st
     }
 }
 
-const setArticleCategories = async (domain: string, permlink: string, categories: string[]) => {
-
+const setArticleCategories = async (blogId: string, permlink: string, categories: ICategory[]) => {
     try {
         const stringified = JSON.stringify(categories);
-        return await engine.set(`categories:${domain}:${permlink}`, stringified);
+        return await engine.set(`${keys.articleWhichCategories}:${blogId}:${permlink}`, stringified);
 
     } catch (error) {
         console.log(error);
