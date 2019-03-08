@@ -5,7 +5,7 @@ import { CollaborationType } from "../enums/CollaborationType";
 export let BlogSchema = new Schema({
     owner: String,
     collaboration_type: {
-        type: [String],
+        type: String,
         default: CollaborationType.MANY_USERS
     },
     collaborators: [

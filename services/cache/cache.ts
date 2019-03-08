@@ -7,8 +7,9 @@ import removeArticle from './actions/articles/removeArticle';
 import setArticleInvalid from './actions/articles/setArticleInvalid';
 import setArticleExist from './actions/articles/setArticleExist';
 import ifArticleExist from './actions/articles/ifArticleExist';
-import getBlog from './actions/blogs/getBlog';
 import setBlog from './actions/blogs/setBlog';
+import getBlog from './actions/blogs/getBlog';
+import removeBlog from './actions/blogs/removeBlog';
 import setUserRegistered from './actions/users/setUserRegistered';
 import isUserRegistered from './actions/users/isUserRegistered';
 import updateArticleCategories from './actions/categories/updateArticleCategories';
@@ -17,12 +18,13 @@ import setArticleContent from './actions/articles/setArticleContent';
 
 export {
     getArticle,
+    setBlog,
     getBlog,
+    removeBlog,
     getFeaturedArticles,
     ifArticleExist,
     getLatestArticles,
     getLatestFromCategory,
-    setBlog,
     addArticle,
     setArticleInvalid,
     setArticleExist,

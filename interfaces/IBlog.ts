@@ -11,7 +11,7 @@ export interface IBlog extends Document {
         ICollaborator
     ],
     domain: string,
-    custom_domain: String,
+    custom_domain: string,
     domain_redirect: boolean,
     title: string;
     slogan: string;

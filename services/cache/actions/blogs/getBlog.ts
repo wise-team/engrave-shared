@@ -13,13 +13,13 @@ async function getBlog(hostname: string): Promise<IBlog> {
     try {
         const blog = await blogs.get(hostname);
         
-        if( ! blog) {
+        if( ! blog || blog.removed) {
 
             const dbBlog = await Blogs.findOne({domain: hostname});
 
             if( ! dbBlog) throw new BlogNotExist();
 
-            return await setBlog(hostname, dbBlog);
+            return await setBlog(dbBlog);
 
         }
         
