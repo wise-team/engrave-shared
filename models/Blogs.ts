@@ -1,13 +1,21 @@
-import { Schema, Model, model, Document } from "mongoose";
+import { Schema, Model, model } from "mongoose";
 import { IBlog } from "../interfaces/IBlog";
-
-interface IBlogModel extends IBlog, Document { };
+import { CollaborationType } from "../enums/CollaborationType";
 
 export let BlogSchema = new Schema({
-    uniqueId: String,
     owner: String,
-    url: String,
+    collaboration_type: {
+        type: [String],
+        default: CollaborationType.MANY_USERS
+    },
+    collaborators: [
+        {
+            username: String,
+            role: { type: String }
+        }
+    ],
     domain: String,
+    custom_domain: String,
     domain_redirect: Boolean,
     title: String,
     slogan: String,
@@ -21,22 +29,21 @@ export let BlogSchema = new Schema({
 
     opengraph_default_image_url: String,
     opengraph_default_description: String,
+
     onesignal_app_id: String,
     onesignal_api_key: String,
     onesignal_body_length: Number,
     onesignal_logo_url: String,
+
     analytics_gtag: String,
     webmastertools_id: String,
     
-    lang: String,
-    theme: String,
+    theme: {
+        type: String,
+        default: 'magazine'
+    },
 
     premium: {
-        type: Boolean,
-        default: false
-    },
-    
-    adopter: {
         type: Boolean,
         default: false
     },
@@ -45,9 +52,10 @@ export let BlogSchema = new Schema({
         {
             name: String,
             slug: String,
-            abstract: String
+            abstract: String,
+            blogId: String
         }
     ]
 });
 
-export let Blogs: Model<IBlogModel> = model<IBlogModel>('blogs', BlogSchema);
+export let Blogs: Model<IBlog> = model<IBlog>('blogs', BlogSchema);

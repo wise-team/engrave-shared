@@ -1,5 +1,4 @@
 import { ICategory } from "./ICategory";
-
 export interface IArticle {
     title: string,
     permlink: string,
