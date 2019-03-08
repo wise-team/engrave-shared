@@ -4,15 +4,13 @@ import getLatestArticles from './actions/articles/getLatestArticles';
 import getLatestFromCategory from './actions/articles/getLatestFromCategory';
 import setArticle from './actions/articles/setArticle';
 import removeArticle from './actions/articles/removeArticle';
-import setArticleInvalid from './actions/articles/setArticleInvalid';
+import setArticleNotExist from './actions/articles/setArticleNotExist';
 import setArticleExist from './actions/articles/setArticleExist';
 import ifArticleExist from './actions/articles/ifArticleExist';
 import getBlog from './actions/blogs/getBlog';
 import setBlog from './actions/blogs/setBlog';
 import setUserRegistered from './actions/users/setUserRegistered';
 import isUserRegistered from './actions/users/isUserRegistered';
-import updateArticleCategories from './actions/categories/updateArticleCategories';
-import getArticleCategories from './actions/categories/getArticleCategories';
 
 export {
     getArticle,
@@ -23,11 +21,9 @@ export {
     getLatestFromCategory,
     setBlog,
     setArticle,
-    setArticleInvalid,
+    setArticleNotExist,
     setArticleExist,
     removeArticle,
     setUserRegistered,
-    isUserRegistered,
-    getArticleCategories,
-    updateArticleCategories
+    isUserRegistered
 }

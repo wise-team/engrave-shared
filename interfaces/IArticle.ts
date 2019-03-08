@@ -1,5 +1,3 @@
-import { Types } from "mongoose";
-
 export interface IArticle {
     title: string,
     permlink: string,
@@ -7,16 +5,12 @@ export interface IArticle {
     abstract: string,
     created: Date,
     tags: string[];
-    featured: string;
+    thumbnail: string;
     votes_count: number,
     value: number,
     comments: number,
-    categories: [
-        {
-            _id: Types.ObjectId,
-            name: string,
-            slug: string,
-            abstract: string
-        }
-    ]
+    category: {
+        name: string,
+        slug: string
+    }
 }

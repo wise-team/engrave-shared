@@ -1,11 +1,10 @@
 import { IArticle } from '../../interfaces/IArticle';
+import { Blog } from '../../interfaces/IBlog';
 import renderSteemCommentBody from './renderSteemCommentBody';
-import { IBlog } from '../../interfaces/IBlog';
-import { ICategory } from '../../interfaces/ICategory';
 
 var striptags = require('striptags');
 
-export default async (steemArticle: any): Promise<IArticle> => {
+export default async (steemArticle: any, blog: Blog): Promise<IArticle> => {
 
     const {
         title,
@@ -14,21 +13,22 @@ export default async (steemArticle: any): Promise<IArticle> => {
     } = steemArticle;
 
     const body = await renderSteemCommentBody(steemArticle.body);
-    const featured = prepareArticleThumbnail(steemArticle);
+    const thumbnail = prepareArticleThumbnail(steemArticle);
     const tags = prepareArticleTags(steemArticle);
     const value = prepareArticleValue(steemArticle);
+    const category = prepareArticleCategory(steemArticle, blog);
 
     return {
         title,
         permlink,
         created,
-        featured,
+        thumbnail,
         body,
         tags,
         votes_count: steemArticle.net_votes,
         value,
         abstract: striptags(body.substr(0, 250)),
-        categories: null,
+        category: category,
         comments: steemArticle.children
     }
 }
@@ -69,6 +69,26 @@ function prepareArticleValue(steemArticle: any) {
     return pendingPayout + curatorPayout + totalPauout;
 }
 
-function prepareArticleCategories(steemArticle: any, blog: IBlog) {    
-   
+function prepareArticleCategory(steemArticle: any, blog: Blog) {    
+    try {
+        
+        for(const category of blog.categories) {
+            if(steemArticle.category == category.steem_tag) {
+                return {
+                    steem_tag: category.steem_tag,
+                    name: category.name,
+                    slug: category.slug,
+                }
+            }
+        } 
+        
+        throw new Error();
+        
+    } catch (error) {
+        return {
+            steem_tag: steemArticle.category,
+            name: steemArticle.category,
+            slug: steemArticle.category,
+        }  
+    }
 }
