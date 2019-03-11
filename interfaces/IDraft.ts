@@ -2,7 +2,7 @@ import { PostStatus } from "../enums/PostStatus";
 import { Document } from "mongoose";
 import { ICategory } from "./ICategory";
 
-export interface IPost extends Document {
+export interface IDraft extends Document {
     blogId: string
     created: Date,
     username: string,

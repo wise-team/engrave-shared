@@ -1,7 +1,7 @@
 import { Schema, Model, model } from 'mongoose';
-import { IPost } from '../interfaces/IPost';
+import { IDraft } from '../interfaces/IDraft';
 
-export let PostSchema: Schema = new Schema({
+export let DraftSchema: Schema = new Schema({
     blogId: {
         type: Schema.Types.ObjectId,
         ref: 'blogs',
@@ -30,4 +30,4 @@ export let PostSchema: Schema = new Schema({
     }
 });
 
-export const Posts: Model<IPost> = model<IPost>("posts", PostSchema);
+export const Drafts: Model<IDraft> = model<IDraft>("drafts", DraftSchema);

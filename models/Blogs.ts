@@ -20,6 +20,7 @@ export let BlogSchema = new Schema({
     title: String,
     slogan: String,
     logo_url: String,
+    favicon_url: String,
     main_image: String,
 
     link_facebook: String,
