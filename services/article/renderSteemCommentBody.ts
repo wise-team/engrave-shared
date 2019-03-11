@@ -28,6 +28,7 @@ function transformYoutubeLinks(text: string) {
     if (!text) return text;
 
     const linkreg = /(?:)<a([^>]+)>(.+?)<\/a>/g;
+    const mdlinkreg = /(?:)\[([^)]+)\]\((.+?)\)/g;
     const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
 
@@ -46,6 +47,14 @@ function transformYoutubeLinks(text: string) {
             }
         }
 
+        // get all markdown syntax links and put in placeholders
+        const matchmdlinks = text.match(mdlinkreg);
+        if (matchmdlinks && matchmdlinks.length > 0) {
+            for (var i = 0; i < matchmdlinks.length; i++) {
+                resultHtml = resultHtml.replace(matchmdlinks[i], "#mdplaceholder" + i + "#");
+            }
+        }
+
         // now go through the matches one by one
         for (var i = 0; i < match.length; i++) {
             // get the key out of the match using the second regex
@@ -58,6 +67,12 @@ function transformYoutubeLinks(text: string) {
         if (matchlinks && matchlinks.length > 0) {
             for (var i = 0; i < matchlinks.length; i++) {
                 resultHtml = resultHtml.replace("#placeholder" + i + "#", matchlinks[i]);
+            }
+        }
+        // ok now put our links back where the placeholders were.
+        if (matchmdlinks && matchmdlinks.length > 0) {
+            for (var i = 0; i < matchmdlinks.length; i++) {
+                resultHtml = resultHtml.replace("#mdplaceholder" + i + "#", matchmdlinks[i]);
             }
         }
     }
