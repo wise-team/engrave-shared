@@ -13,4 +13,7 @@ export interface IDraft extends Document {
     tags: string[],
     featured_image: string,
     status: PostStatus,
+    decline_reward: boolean,
+    permlink: string,
+    parent_category: string
 }

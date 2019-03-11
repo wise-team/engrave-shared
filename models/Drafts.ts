@@ -27,7 +27,13 @@ export let DraftSchema: Schema = new Schema({
     featured_image: String,
     status: { 
         type: String
-    }
+    },
+    decline_reward: {
+        type: Boolean,
+        default: false
+    },
+    permlink: String,
+    parent_category: String
 });
 
 export const Drafts: Model<IDraft> = model<IDraft>("drafts", DraftSchema);
