@@ -1,6 +1,7 @@
 const sc2 = require('steemconnect');
 
-import getRefreshToken from './actions/getRefreshToken'
+import getRefreshToken from './actions/getRefreshToken';
+import fetchElevatedAccessToken from './actions/fetchElevatedAccessToken';
 import vote from './actions/vote'
 import comment from './actions/comment'
 
@@ -20,6 +21,7 @@ const sc = {
     dashboard,
     blog,
     getRefreshToken,
+    fetchElevatedAccessToken,
     vote,
     comment
 }
