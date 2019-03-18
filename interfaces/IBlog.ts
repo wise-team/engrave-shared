@@ -39,5 +39,7 @@ export interface IBlog extends Document {
 
     premium: boolean,
 
-    categories: ICategory[]
+    categories: ICategory[],
+    
+    content_category: String
 }

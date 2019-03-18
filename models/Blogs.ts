@@ -56,7 +56,11 @@ export let BlogSchema = new Schema({
             abstract: String,
             blogId: String
         }
-    ]
+    ],
+    content_category: {
+        type: String,
+        default: "Other"
+    }
 });
 
 export let Blogs: Model<IBlog> = model<IBlog>('blogs', BlogSchema);
