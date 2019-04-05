@@ -15,16 +15,10 @@ export let DraftSchema: Schema = new Schema({
     },
     title: String,
     body: String,
-    categories: [
-        {
-            name: String,
-            slug: String,
-            abstract: String,
-            blogId: String
-        }
-    ],
+    categories: [String],
     tags: [String],
     featured_image: String,
+    thumbnail_image: String,
     status: { 
         type: String
     },
