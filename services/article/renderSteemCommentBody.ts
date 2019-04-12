@@ -1,101 +1,27 @@
-const isImageUrl = require('is-image-url');
+import { DefaultRenderer } from "steem-content-renderer";
 
-var Remarkable = require('remarkable');
-
-var md = new Remarkable({
-    html: true, 
+const renderer = new DefaultRenderer({
+    baseUrl: "https://steemit.com/",
     breaks: true,
-    linkify: true ,
-    quotes: '“”‘’'
+    skipSanitization: false,
+    addNofollowToLinks: true,
+    doNotShowImages: false,
+    ipfsPrefix: "",
+    assetsWidth: 640,
+    assetsHeight: 480,
+    imageProxyFn: (url: string) => url,
+    usertagUrlFn: (account: string) => "/@" + account,
+    hashtagUrlFn: (hashtag: string) => "/trending/" + hashtag,
+    isLinkSafeFn: (url: string) => true,
 });
 
 export default async function renderSteemCommentBody(body: string) {
     let rendered = body;
     
     rendered = removeDappsInfo(rendered);
-    rendered = transformYoutubeLinks(rendered);
-    rendered = md.render(rendered);
-    rendered = await rawUrlsToImages(rendered);
+    rendered = `<html>${renderer.render(rendered)}</html>`;
     
-    return rendered;
-}
-
-function createYoutubeEmbed(key: string) {
-    return '<iframe width="100%" height="375" src="https://www.youtube.com/embed/' + key + '" frameborder="0" allowfullscreen></iframe><br/>';
-};
-
-function transformYoutubeLinks(text: string) {
-    if (!text) return text;
-
-    const linkreg = /(?:)<a([^>]+)>(.+?)<\/a>/g;
-    const mdlinkreg = /(?:)\[([^)]+)\]\((.+?)\)/g;
-    const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
-    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
-
-    let resultHtml = text;
-
-    // get all the matches for youtube links using the first regex
-    const match = text.match(fullreg);
-    
-    if (match && match.length > 0) {
-
-        // get all links and put in placeholders
-        const matchlinks = text.match(linkreg);
-        if (matchlinks && matchlinks.length > 0) {
-            for (var i = 0; i < matchlinks.length; i++) {
-                resultHtml = resultHtml.replace(matchlinks[i], "#placeholder" + i + "#");
-            }
-        }
-
-        // get all markdown syntax links and put in placeholders
-        const matchmdlinks = text.match(mdlinkreg);
-        if (matchmdlinks && matchmdlinks.length > 0) {
-            for (var i = 0; i < matchmdlinks.length; i++) {
-                resultHtml = resultHtml.replace(matchmdlinks[i], "#mdplaceholder" + i + "#");
-            }
-        }
-
-        // now go through the matches one by one
-        for (var i = 0; i < match.length; i++) {
-            // get the key out of the match using the second regex
-            let matchParts = match[i].split(regex);
-            // replace the full match with the embedded youtube code
-            resultHtml = resultHtml.replace(match[i], createYoutubeEmbed(matchParts[1]));
-        }
-
-        // ok now put our links back where the placeholders were.
-        if (matchlinks && matchlinks.length > 0) {
-            for (var i = 0; i < matchlinks.length; i++) {
-                resultHtml = resultHtml.replace("#placeholder" + i + "#", matchlinks[i]);
-            }
-        }
-        // ok now put our links back where the placeholders were.
-        if (matchmdlinks && matchmdlinks.length > 0) {
-            for (var i = 0; i < matchmdlinks.length; i++) {
-                resultHtml = resultHtml.replace("#mdplaceholder" + i + "#", matchmdlinks[i]);
-            }
-        }
-    }
-    return resultHtml;
-};
-
-async function rawUrlsToImages(text: string): Promise<string> {
-
-    const htmlLink = /(?:)<a([^>]+)>(.+?)<\/a>/g;
-    const urlRegex = /(<a href=\".*\">)(.*)(<\/a>)/g;
-
-    const links = text.match(htmlLink);
-       
-    if(links && links.length) {
-        for(const link of links) {
-            const url = link.split(urlRegex)[2];
-            if(isImageUrl(url)) {
-                text = text.replace(link, `<img src="${url}" alt="">`);
-            }
-        }
-    }
-    
-    return text;
+    return rendered
 }
 
 function removeDappsInfo(body: string) {
