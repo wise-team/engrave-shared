@@ -10,8 +10,8 @@ const renderer = new DefaultRenderer({
     assetsWidth: 640,
     assetsHeight: 480,
     imageProxyFn: (url: string) => url,
-    usertagUrlFn: (account: string) => "/@" + account,
-    hashtagUrlFn: (hashtag: string) => "/trending/" + hashtag,
+    usertagUrlFn: (account: string) => "https://steemit.com/@" + account,
+    hashtagUrlFn: (hashtag: string) => "https://steemit.com/trending/" + hashtag,
     isLinkSafeFn: (url: string) => true,
 });
 
@@ -27,7 +27,7 @@ export default async function renderSteemCommentBody(body: string) {
 function removeDappsInfo(body: string) {
     let filtered = body;
     
-    filtered = removeEngraveInfo(body);
+    filtered = removeEngraveInfo(filtered);
     filtered = removePartikoInfo(filtered);
     
     return filtered;
@@ -51,6 +51,7 @@ function removeEngraveInfo(body: string) {
 function removePartikoInfo(body: string) {
     return body
         .replace("Posted using [Partiko Android](https://steemit.com/@partiko-android)", "")
-        .replace("Posted using [Partiko iOS](https://steemit.com/@partiko-ios)","");
+        .replace("Posted using [Partiko iOS](https://steemit.com/@partiko-ios)","")
+        .replace(/Posted using \[Partiko Android\]\(https:\/\/partiko.app\/referral\/.*\)/, "")
+        .replace(/Posted using \[Partiko iOS\]\(https:\/\/partiko.app\/referral\/.*\)/, "");
 }
-
