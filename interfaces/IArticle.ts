@@ -6,6 +6,7 @@ export interface IArticle {
     created: Date,
     tags: string[];
     thumbnail: string;
+    featured_image: string;
     votes_count: number,
     value: number,
     comments: number,

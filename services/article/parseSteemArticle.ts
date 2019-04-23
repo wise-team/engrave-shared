@@ -14,6 +14,7 @@ export default async (steemArticle: any, blog: Blog): Promise<IArticle> => {
 
     const body = await renderSteemCommentBody(steemArticle.body);
     const thumbnail = prepareArticleThumbnail(steemArticle);
+    const featured_image = prepareArticleFeaturedImage(steemArticle);
     const tags = prepareArticleTags(steemArticle);
     const value = prepareArticleValue(steemArticle);
     const category = prepareArticleCategory(steemArticle, blog);
@@ -23,6 +24,7 @@ export default async (steemArticle: any, blog: Blog): Promise<IArticle> => {
         permlink,
         created,
         thumbnail,
+        featured_image,
         body,
         tags,
         votes_count: steemArticle.net_votes,
@@ -42,6 +44,20 @@ function prepareArticleThumbnail(steemArticle: any) {
             return metadata.image[0];
         } else {
             return null;
+        }
+    } catch (error) {
+        return null;
+    }
+}
+
+function prepareArticleFeaturedImage(steemArticle: any) {
+    try {
+        const metadata = JSON.parse(steemArticle.json_metadata);
+        
+        if (typeof(metadata.featured_image) == 'undefined' ) { // old version without featured_image -> return thumbnail
+            return prepareArticleThumbnail(steemArticle);
+        } else {
+            return metadata.featured_image
         }
     } catch (error) {
         return null;
