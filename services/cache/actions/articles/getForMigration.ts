@@ -13,7 +13,7 @@ async function getForMigration() {
             const parsed = JSON.parse(article);
             if(parsed && parsed.state != 404) {
                 posts.push({
-                    username: key.split(':')[2],
+                    username: key.split(':')[1],
                     permlink: parsed.permlink,
                     category: parsed.category.slug
                 })
