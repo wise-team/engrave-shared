@@ -3,7 +3,7 @@ import engine from "../../store/engine";
 async function getForMigration() {
     let posts:any = [];
     
-    const keys = await engine.keys('article:');
+    const keys = await engine.keys('article:*');
 
     console.log(keys);
 
