@@ -7,11 +7,12 @@ async function getForMigration() {
 
     console.log(keys);
 
-    for(const key in keys) {
+    for(const key of keys) {
         const article = await engine.get(key);
         if(article) {
             const parsed = JSON.parse(article);
             if(parsed && parsed.state != 404) {
+                console.log()
                 posts.push({
                     username: key.split(':')[2],
                     permlink: parsed.permlink,
